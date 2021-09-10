@@ -72,7 +72,7 @@ resource "aws_instance" "main" {
     { Name = var.instance_name }
   )
 
-  volume_tags = merge(
+  volume_tags = var.volume_tags == {} ? null : merge(
     var.tags,
     var.volume_tags,
     { Name = var.instance_name }
@@ -87,6 +87,9 @@ resource "aws_instance" "main" {
       kms_key_id            = lookup(var.root_block_device, "kms_key_id", null)
       volume_size           = lookup(var.root_block_device, "volume_size", null)
       volume_type           = lookup(var.root_block_device, "volume_type", null)
+      tags = merge(lookup(var.root_block_device, "tags", null),
+        { Name = var.instance_name }
+      )
     }
   }
 
