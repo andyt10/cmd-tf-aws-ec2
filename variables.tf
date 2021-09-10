@@ -90,6 +90,15 @@ variable "root_block_device" {
   default     = {}
 }
 
+# if this module was limited to >= 0.15 support  we could convert root_block_device to object, pass in maps for the tags, and set defaults:
+# https://www.terraform.io/docs/language/functions/defaults.html
+# However it is used in older versions of TF, and for backwards compatability with setting defaults we need to split this out.
+variable "root_block_device_tags" {
+  type = map(string)
+  description = "Tags applied to the root block device. This should be used in place of volume_tags when additional volumes are present, and provider default_tags are used due to perpetual tag apply. See: https://github.com/hashicorp/terraform-provider-aws/issues/19188 and https://github.com/hashicorp/terraform-provider-aws/issues/18311"
+  default = {}
+}
+
 variable "metadata_options" {
   type        = map(string)
   description = "Metadata Options. See https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options"
