@@ -90,8 +90,8 @@ resource "aws_instance" "main" {
       tags =  merge(
         var.tags,
         var.volume_tags,
+        { Name = var.instance_name },
         var.root_block_device_tags,
-        { Name = var.instance_name }
       )
     }
   }
