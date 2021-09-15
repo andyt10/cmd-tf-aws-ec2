@@ -72,12 +72,6 @@ resource "aws_instance" "main" {
     { Name = var.instance_name }
   )
 
-  volume_tags = var.root_block_device_tags != {} ? null : merge(
-    var.tags,
-    var.volume_tags,
-    { Name = var.instance_name }
-  )
-
   dynamic "root_block_device" {
     for_each = var.root_block_device != {} ? [1] : []
     content {
@@ -90,9 +84,8 @@ resource "aws_instance" "main" {
       tags =  merge(
         var.tags,
         var.volume_tags,
-        { Name = var.instance_name },
-        var.root_block_device_tags,
-      )
+        { Name = var.instance_name }
+    )
     }
   }
 
