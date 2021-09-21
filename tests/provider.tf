@@ -1,8 +1,7 @@
 provider "aws" {
-  version                 = "3.24.0"
+  version                 = ">= 3.24.0"
   profile                 = "cmdlabtf-master"
   region                  = "ap-southeast-2"
-  skip_metadata_api_check = true
 }
 
 provider "tls" {
